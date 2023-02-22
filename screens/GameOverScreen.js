@@ -1,4 +1,4 @@
-import { View, Image, StyleSheet, Text } from "react-native";
+import { View, Image, StyleSheet, Text, Dimensions } from "react-native";
 import Title from "../components/ui/Title";
 import { StatusBar } from "expo-status-bar";
 import Colors from "../constants/colors";
@@ -31,6 +31,8 @@ export default function GameIsOverScreen({
   );
 }
 
+const deviceWidth = Dimensions.get("window").width;
+
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
@@ -39,13 +41,13 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   imageContainer: {
-    borderRadius: 150,
-    width: 300,
-    height: 300,
+    borderRadius: deviceWidth < 380 ? 75 : 150,
+    width: deviceWidth < 380 ? 150 : 300,
+    height: deviceWidth < 380 ? 150 : 300,
     borderWidth: 3,
     borderColor: Colors.primary800,
     overflow: "hidden",
-    margin: 36,
+    margin: deviceWidth < 380 ? 24 : 36,
   },
   image: {
     width: "100%",
