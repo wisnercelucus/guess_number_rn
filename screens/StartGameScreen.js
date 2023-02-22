@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { StyleSheet, TextInput, View, Alert } from "react-native";
+import Card from "../components/ui/Card";
 
-import PrimaryButton from "../components/PrimaryButton";
+import PrimaryButton from "../components/ui/PrimaryButton";
+import Title from "../components/ui/Title";
+import Colors from "../constants/colors";
+import InstructionText from "../components/ui/InstructionText";
 
-export default function StartGameScreen() {
+export default function StartGameScreen({ onConfirmNumber }) {
   const [enterNumber, setEnterNumber] = useState("");
 
   numberInputHandler = (value) => {
@@ -21,6 +25,8 @@ export default function StartGameScreen() {
 
       return;
     }
+
+    onConfirmNumber(providedNumber);
   };
 
   onResetInputHandler = () => {
@@ -28,50 +34,47 @@ export default function StartGameScreen() {
   };
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.numberInput}
-        maxLength={2}
-        keyboardType="number-pad"
-        autoCorrect={false}
-        onChangeText={numberInputHandler}
-        autoCapitalize="none"
-        value={enterNumber}
-      />
-      <View style={styles.buttonsContainer}>
-        <View style={styles.buttonContainer}>
-          <PrimaryButton onPress={onResetInputHandler}>Reset</PrimaryButton>
+    <View style={styles.rootContainer}>
+      <Title>Guess My Number</Title>
+      <Card>
+        <InstructionText>Enter a number</InstructionText>
+        <TextInput
+          style={styles.numberInput}
+          maxLength={2}
+          keyboardType="number-pad"
+          autoCorrect={false}
+          onChangeText={numberInputHandler}
+          autoCapitalize="none"
+          value={enterNumber}
+        />
+        <View style={styles.buttonsContainer}>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={onResetInputHandler}>Reset</PrimaryButton>
+          </View>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={onConfirmInputHandler}>
+              Confirm
+            </PrimaryButton>
+          </View>
         </View>
-        <View style={styles.buttonContainer}>
-          <PrimaryButton onPress={onConfirmInputHandler}>Confirm</PrimaryButton>
-        </View>
-      </View>
+      </Card>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  inputContainer: {
+  rootContainer: {
+    flex: 1,
     marginTop: 100,
-    padding: 16,
-    backgroundColor: "#4e0329",
-    marginHorizontal: 24,
-    borderRadius: 8,
-    justifyContent: "center",
     alignItems: "center",
-    elevation: 4, //For android
-    shadowColor: "black", //For iOS
-    shadowOffset: { width: 0, height: 2 }, //for iOS
-    shadowRadius: 6, // iOS
-    shadowOpacity: 0.25, //iOS
   },
   numberInput: {
     width: 50,
     height: 50,
     fontSize: 32,
-    borderBottomColor: "#ddb52f",
+    borderBottomColor: Colors.accent500,
     borderBottomWidth: 2,
-    color: "#ddb52f",
+    color: Colors.accent500,
     marginVertical: 8,
     fontWeight: "bold",
     textAlign: "center",
